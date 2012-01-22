@@ -29,20 +29,20 @@ height:100%;
     cursor:pointer;
 }
 .cluster-s {
-    background: url('img/cluster-s.png') no-repeat;
+    background: url('../img/cluster-s.png') no-repeat;
     line-height:46px;
     width: 45px;
     height: 46px;
 }
 .cluster-m {
-    background: url('img/cluster-m.png') no-repeat;
+    background: url('../img/cluster-m.png') no-repeat;
     line-height:63px;
     width: 64px;
     height: 63px;
     font-size: 20px;
 }
 .cluster-l {
-    background: url('img/cluster-l.png') no-repeat;
+    background: url('../img/cluster-l.png') no-repeat;
     line-height:80px;
     width: 81px;
     height: 80px;
