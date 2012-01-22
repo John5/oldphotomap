@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Den Haag Fotokaart</title>
+    <meta name="robots" value="noindx, nofollow">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&language=nl&region=nl"></script>
+    <script type="text/javascript" src="js/gmap3.min.js"></script> 
+    <script type="text/javascript" src="js/jquery.DOMWindow.js"></script> 
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <style>
+    
+    </style>
+    <script type="text/javascript">
+    
+        var showSourcePage = function(id) {
+            
+            var url = 'http://www.haagsebeeldbank.nl/zoeken/weergave/search/layout/result/indeling/detail/form/advanced/q/zoekveld/';
+            
+            window.open(url + id);
+        }
+    
+        var openInfoWindow = function(options) {
+            
+            $.openDOMWindow(options);
+            
+            setInfoWindowEventHandlers();
+            $('#DOMWindow .extras').show();
+            
+            $('#DOMWindow .thumbs .thumb:first img').trigger('click');
+        }
+        
+        var setInfoWindowEventHandlers = function() {
+        
+            $('[data-source-id]').click(function(event) {
+                var t = $(event.target);
+                
+                showSourcePage(t.attr('data-source-id'));
+            });
+            
+            $('#DOMWindow .thumbs .thumb').click(function(event) {
+            
+                var sId = $('#DOMWindow .image img').attr('data-id');
+                if(sId !== null) {
+                    $('#DOMWindow .thumbs .thumb img[data-id="' + sId + '"]').parent().removeClass('selected');
+                }
+                
+                var t = $(event.target);
+                if(t.is('div')) {
+                    t = t.find('img:first');
+                }
+                               
+                
+                var src = 'thumbs/' + t.attr('data-id') + '.jpg'
+                
+                $('#DOMWindow .caption').append(t.attr('title'));                
+                $('#DOMWindow .image img').attr('src', src);
+                $('#DOMWindow .image img').attr('data-id', t.attr('data-id'));
+                t.parent().addClass('selected');
+                
+                 $('#DOMWindow .image img').load(function() {
+                    
+                    $('#DOMWindow').animate({'height': ($('#DOMWindow .body').height() + 20) + 'px'}, 200);
+                 });
+                
+            });
+            
+            $(document).keyup(function(e) {
+            
+                var selected = $('#DOMWindow .thumbs .thumb.selected');
+                
+                if(selected) {
+                
+                    if(e.which ==37) { //left
+                        selected.prev().trigger('click');
+                        
+                    } else if(e.which == 39) { //right
+                        selected.next().trigger('click');
+                    }
+                }
+            });
+        }
+    
+        $(document).ready(function() {
+        
+           
+            
+            var startPosition = new google.maps.LatLng(52.0690473, 4.2807648);
+      
+        $('#map').gmap3(
+          {action: 'init',
+            options:{
+              center:startPosition,
+              zoom: 12,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+          }
+        );
+        
+        $.get('markers.json.php', function(data) {
+                     
+            $('#map').gmap3({
+            action:'addMarkers',
+            markers: data,
+            radius:100,
+            clusters:{
+              // This style will be used for clusters with more than 0 markers
+              0: {
+                content: '<div class="cluster cluster-s">CLUSTER_COUNT</div>',
+                width: 53,
+                height: 52
+              },
+              // This style will be used for clusters with more than 20 markers
+              20: {
+                content: '<div class="cluster cluster-m">CLUSTER_COUNT</div>',
+                width: 56,
+                height: 55
+              },
+              // This style will be used for clusters with more than 50 markers
+              50: {
+                content: '<div class="cluster cluster-l">CLUSTER_COUNT</div>',
+                width: 66,
+                height: 65
+              }
+            },
+            cluster:{
+                events: {
+                    click: function(cluster, event, data) {
+                    
+                        var content = '';
+                        
+                        for(var i = 0; i < data.markers.length; i++) {
+                            var m = data.markers[i];
+                            var src = 'icons/' + m.data.id + '.png'
+                            
+                            content += '<div class="thumb"><img src="' + src + '" alt="" title="' + m.data.caption +'" data-id="' + m.data.id +'"></div>';
+                        }
+
+                        content = '<div class="body"><div class="thumbScroller"><div class="thumbs" style="width:' + (data.markers.length * 87) + 'px;">' +content + '</div></div><div class="image"><img src="" data-source-id="" alt="" title="Bekijk foto in Beeldbank Haags Gemeentearchief"></div><div class="caption"></div><div class="extras"><div class="button" data-source-id="">Bekijk in Beeldbank Haags Gemeentearchief</div></div></div>';
+                    
+                        openInfoWindow({html: content, width: 640, height: 460});
+                    },
+                }
+            },
+            marker: {
+              options: {
+                icon: new google.maps.MarkerImage(
+                    'img/marker.png',
+                    google.maps.Size(33, 33),
+                    null,
+                    google.maps.Point(16, 16)
+                )
+              },
+              events:{  
+                click: function(marker, event, data){
+                    console.log('clicked');
+                    
+                     var src = 'thumbs/' + data.id + '.jpg'
+                            
+                    var content = '<div class="body"><div class="image"><img src="' + src + '" data-source-id="' + data.id + '" alt="" title="Bekijk foto in Beeldbank Haags Gemeentearchief"></div><div class="caption">' + data.caption + '</div><div class="extras"><div class="button" data-source-id="">Bekijk in Beeldbank Haags Gemeentearchief</div></div></div>';
+                    
+                        openInfoWindow({html: content});
+                },
+                mouseover: function(marker, event, data){
+                    
+                    var src = 'icons/' + data.id + '.png'
+                
+                    $(this).gmap3(
+                    
+                  
+                    { action:'clear', name:'overlay'},
+                    { action:'addOverlay',
+                      latLng: marker.getPosition(),
+                      content:  '<div class="infobulle">' +
+                                    '<div class="balloon">' +
+                                      '<div class="icon"><img src="' + src + '"></div>' +
+                                      '<div class="text">' + data.caption + '</div>' +
+                                  '</div>' +
+                                  '<div class="pointer"></div>' +
+                                '</div>',
+                      offset: {
+                        x:-46,
+                        y:-73
+                      }
+                    }
+                  );
+                },
+                mouseout: function(){
+                  $(this).gmap3({action:'clear', name:'overlay'});
+                }
+              }
+            }
+        });
+
+         
+        }, 'json');
+        
+        
+    });    
+
+    </script>
+
+</head>
+    <body>
+    
+        <div id="map"></div>
+        <div id="helpInfo">
+        
+            <p>Deze kaart toont een kleine selectie van foto's uit de Beeldbank Haags gemeentearchief. De foto's zijn beschikbaar gesteld in het kader van het OpenData-initatief van de gemeente Den Haag.</p>
+            
+            <p>De locaties zijn bepaald door een geautomatiseerde analyse van de onderschriften.</p>
+            
+            <p>Foto's die dichtbij elkaar zijn genomen zijn gegroepeerd. Het getal geeft aan hoeveel foto's er in het gebied zijn. Zoom in op de kaart voor meer details.</p>
+        
+            <p>Klik op de groene iconen om de foto en het onderschift te zien.</p>
+
+            <p></p>        
+        </div>
+    </body>
+</html>
