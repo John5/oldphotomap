@@ -53,13 +53,14 @@
                 
                 var src = 'thumbs/' + t.attr('data-id') + '.jpg'
                 
-                $('#DOMWindow .caption').append(t.attr('title'));                
+                
+                $('#DOMWindow [data-source-id]').attr('data-source-id', t.attr('data-id'));
+                $('#DOMWindow .caption').text(t.attr('title'));                
                 $('#DOMWindow .image img').attr('src', src);
                 $('#DOMWindow .image img').attr('data-id', t.attr('data-id'));
                 t.parent().addClass('selected');
                 
-                 $('#DOMWindow .image img').load(function() {
-                    
+                 $('#DOMWindow .image img').load(function() {                 
                     $('#DOMWindow').animate({'height': ($('#DOMWindow .body').height() + 20) + 'px'}, 200);
                  });
                 
@@ -71,12 +72,15 @@
                 
                 if(selected) {
                 
-                    if(e.which ==37) { //left
+                    if(e.which == 37) { //left
                         selected.prev().trigger('click');
                         
                     } else if(e.which == 39) { //right
                         selected.next().trigger('click');
+                    } else if(e.which == 27) {                
+                        $.closeDOMWindow();
                     }
+                    
                 }
             });
         }
@@ -204,7 +208,9 @@
     <body>
     
         <div id="map"></div>
-        <div id="helpInfo">
+        <div id="helpInfo" style="position:fixed; top: 30px; right:30px; width:240px; min-height:240px; background: rgba(40, 40, 40, 0.85); color: #eee;">
+        
+            <div class="body" style="padding:10px;">
         
             <p>Deze kaart toont een kleine selectie van foto's uit de Beeldbank Haags gemeentearchief. De foto's zijn beschikbaar gesteld in het kader van het OpenData-initatief van de gemeente Den Haag.</p>
             
@@ -214,7 +220,9 @@
         
             <p>Klik op de groene iconen om de foto en het onderschift te zien.</p>
 
-            <p></p>        
+            <p></p>       
+            
+            </div>
         </div>
     </body>
 </html>

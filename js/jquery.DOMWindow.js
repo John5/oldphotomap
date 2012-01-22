@@ -238,7 +238,7 @@
 					if(settings.positionType == 'centered'){centerDOMWindow();}
 				});
 				
-				$DOMWindow.append(settings.html);
+				$DOMWindow.html(settings.html);
 				
 				showDOMWindow();
 		
