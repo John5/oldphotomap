@@ -230,7 +230,7 @@ for($i = 0; $i < count($images); $i++) {
     print_r($image);
     
     if($i == 5) {
-        break;
+        //break;
     }
 }
 
