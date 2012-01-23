@@ -84,7 +84,7 @@
             $('#infoButton').hide();
         });
         
-        var startPosition = new google.maps.LatLng(52.0690473, 4.2807648);
+        var startPosition = new google.maps.LatLng(52.06905, 4.33);
   
     $('#map').gmap3(
       {action: 'init',
@@ -165,7 +165,6 @@
                 var src = 'icons/' + data.id + '.png'
             
                 $(this).gmap3(
-                
               
                 { action:'clear', name:'overlay'},
                 { action:'addOverlay',
@@ -190,8 +189,7 @@
           }
         }
     });
-
-     
+    
     }, 'json');
     
     
