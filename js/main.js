@@ -156,7 +156,7 @@
                 
                  var src = 'thumbs/' + data.id + '.jpg'
                         
-                var content = '<div class="body"><div class="image"><img src="' + src + '" data-source-id="' + data.id + '" alt="" title="Bekijk foto in Beeldbank Haags Gemeentearchief"></div><div class="caption">' + data.caption + '</div><div class="extras"><div class="button" data-source-id="">Bekijk in Beeldbank Haags Gemeentearchief</div></div></div>';
+                var content = '<div class="body"><div class="image"><img src="' + src + '" data-source-id="' + data.id + '" alt="" title="Bekijk foto in Beeldbank Haags Gemeentearchief"></div><div class="caption">' + data.caption + '</div><div class="extras"><div class="button" data-source-id="' + data.id + '">Bekijk in Beeldbank Haags Gemeentearchief</div></div></div>';
                 
                     openInfoWindow({html: content});
             },
