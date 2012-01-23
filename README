@@ -1,0 +1,16 @@
+Map with historical pictures of The Hague
+
+This is an web application that displays historical images of the city The Hague (Netherlands) from the municipal archives (Beeldbank Haags Gemeentearchief) on a map.
+
+By placing the images on a map is easier to find images in a certain area of neighborhood of the city. The only other way before this was by searching in the archive using keywords. Meaning that you would have to enter many different street names to find images from one area.
+
+This application is intended as a demonstration of how the existing data can be used in new ways to make it more accessible. This application is an entry for a contest of the municipality of The Hague for the development of applications using open data.
+
+Images are clustered into groups. The number displays how many images are in that cluster. Clicking on a cluster will open a panel where you can browse through the images in that cluster. 
+
+Keyboard controls in panel with more than one image:
+Left key =  select previous image
+Right key = select next image
+Escape key = close image panel
+
+This online application has been developed for Mozilla Firefox 9 and has also been tested to work in Apple Safari 5.1.
