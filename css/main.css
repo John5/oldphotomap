@@ -139,7 +139,10 @@ height:100%;
     min-height: 100px;
     vertical-align:middle;
     padding:10px;
-    cursor:pointer;
+}
+
+#DOMWindow .image img {
+    cursor: pointer;
 }
 
 #DOMWindow .caption {

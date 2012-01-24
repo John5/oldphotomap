@@ -129,7 +129,29 @@
         },
         cluster:{
             events: {
+                mouseover: function(cluster, event, data) {
+                    
+                     $(this).gmap3({
+                        action: 'setOptions', args:[{
+                        draggableCursor: 'pointer'
+                        }]
+                     });
+                },
+                mouseout: function(cluster, event, data) {
+                    
+                     $(this).gmap3({
+                        action: 'setOptions', args:[{
+                        draggableCursor: 'url(http://maps.google.com/mapfiles/openhand.cur), move'
+                        }]
+                     });
+                },
                 click: function(cluster, event, data) {
+                
+                    $(this).gmap3({
+                        action: 'setOptions', args:[{
+                        draggableCursor: 'url(http://maps.google.com/mapfiles/openhand.cur), move'
+                        }]
+                     });
                 
                     var content = '';
                     
