@@ -7,6 +7,12 @@
     }
 
     var openInfoWindow = function(options) {
+    
+        $('#map').gmap3({
+            action: 'setOptions', args:[{
+                keyboardShortcuts: false
+            }]
+        });
         
         $.openDOMWindow(options);
         
@@ -92,13 +98,22 @@
         var startPosition = new google.maps.LatLng(52.06905, 4.33);
   
     $('#map').gmap3(
-      {action: 'init',
-        options:{
-          center:startPosition,
-          zoom: 12,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+        {action: 'init',
+            options: {
+                center:startPosition,
+                zoom: 12,
+                minZoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            },
+            /*events: {
+                zoom_changed: function(map) {
+                    
+                    if(map.zoom < 12) {
+                        map.setZoom(12);
+                    }
+                }
+            }*/
         }
-      }
     );
     
     $.get('markers.json', function(data) {

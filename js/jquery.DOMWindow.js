@@ -34,7 +34,14 @@
 	};
 	
 	//allow for public call, pass settings
-	$.closeDOMWindow = function(s){$.fn.closeDOMWindow(s);};
+	$.closeDOMWindow = function(s){
+       $.fn.closeDOMWindow(s);
+    	$('#map').gmap3({
+    	    action: 'setOptions', args:[{
+                keyboardShortcuts: true
+            }]
+        });
+	};
 	
 	//openDOMWindow
 	$.fn.openDOMWindow = function(instanceSettings){	
