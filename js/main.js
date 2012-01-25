@@ -17,6 +17,7 @@
         $.openDOMWindow(options);
         
         setInfoWindowEventHandlers();
+        $('#DOMWindow #prevButton').addClass('disabled');
         $('#DOMWindow .extras').show();
         
         $('#DOMWindow .thumbs .thumb:first img').trigger('click');
@@ -30,7 +31,25 @@
             showSourcePage(t.attr('data-source-id'));
         });
         
+        
+        $('#DOMWindow #prevButton').click(function(event) {
+            var selected = $('#DOMWindow .thumbs .thumb.selected');
+
+            if(selected) {
+                selected.prev().trigger('click');
+            }
+        });
+        
+        $('#DOMWindow #nextButton').click(function(event) {
+            var selected = $('#DOMWindow .thumbs .thumb.selected');
+
+            if(selected) {
+                selected.next().trigger('click');
+            }
+        });
+    
         $('#DOMWindow .thumbs .thumb').click(function(event) {
+        
         
             var sId = $('#DOMWindow .image img').attr('data-id');
             if(sId !== null) {
@@ -41,7 +60,18 @@
             if($t.is('div')) {
                 $t = $t.find('img:first');
             }
-                           
+                 
+            if($t.parent().prev().is('div')) {
+                $('#DOMWindow #prevButton').removeClass('disabled');
+            } else {
+                $('#DOMWindow #prevButton').addClass('disabled');
+            }
+            
+            if($t.parent().next().is('div')) {
+                $('#DOMWindow #nextButton').removeClass('disabled');
+            } else {
+                $('#DOMWindow #nextButton').addClass('disabled');
+            }
             
             var src = 'thumbs/' + $t.attr('data-id') + '.jpg'
             
@@ -177,7 +207,7 @@
                         content += '<div class="thumb"><img src="' + src + '" alt="" title="' + m.data.caption +'" data-id="' + m.data.id +'"></div>';
                     }
 
-                    content = '<div class="body"><div class="thumbScroller"><div class="thumbs" style="width:' + (data.markers.length * 87) + 'px;">' +content + '</div></div><div class="image"><img src="" data-source-id="" alt="" title="Bekijk foto in Beeldbank Haags Gemeentearchief"></div><div class="caption"></div><div class="extras"><div class="button" data-source-id="">Bekijk in Beeldbank Haags Gemeentearchief</div></div></div>';
+                    content = '<div class="body"><div id="prevButton"></div><div id="nextButton"></div><div class="thumbScroller"><div class="thumbs" style="width:' + (data.markers.length * 87) + 'px;">' +content + '</div></div><div class="image"><img src="" data-source-id="" alt="" title="Bekijk foto in Beeldbank Haags Gemeentearchief"></div><div class="caption"></div><div class="extras"><div class="button" data-source-id="">Bekijk in Beeldbank Haags Gemeentearchief</div></div></div>';
                 
                     openInfoWindow({html: content, width: 640, height: 460});
                 },
@@ -186,8 +216,8 @@
         marker: {
           options: {
             icon: new google.maps.MarkerImage(
-                'img/marker.png',
-                google.maps.Size(33, 33),
+                'img/marker-camera.png',
+                google.maps.Size(31, 31),
                 null,
                 google.maps.Point(16, 16)
             )

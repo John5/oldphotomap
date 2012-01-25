@@ -171,6 +171,8 @@ height:100%;
     opacity: 0.7;
 }
 
+#DOMWindow #prevButton:hover,
+#DOMWindow #nextButton:hover,
 #DOMWindow .button:hover {
     opacity: 1;
     -webkit-transition: opacity;
@@ -178,10 +180,46 @@ height:100%;
     -webkit-transition-duration: 200ms;
 }
 
+#DOMWindow #prevButton.disabled,
+#DOMWindow #nextButton.disabled {
+    opacity: 0.2;
+    -webkit-transition: opacity;
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 600ms;
+    cursor: default;
+}
+
 #DOMWindow .extras {
     text-align:center;
     display:none;
 }
+
+#DOMWindow #prevButton {
+    position:absolute;
+    left:0px;
+    top: 120px;
+    width: 110px;
+    height:160px;
+    cursor:pointer;
+    background: url('../img/button-prev.png') no-repeat;
+    background-position: 100% 50%;
+    opacity: 0.65;
+}
+
+
+#DOMWindow #nextButton {
+    position:absolute;
+    right:0px;
+    top: 120px;
+    width: 110px;
+    height:160px;
+    cursor:pointer;
+    background: url('../img/button-next.png') no-repeat;
+    background-position: 0% 50%;
+    opacity: 0.65;
+}
+
+
 
 #infoWindow {
     position:fixed;
@@ -198,16 +236,16 @@ height:100%;
     position:fixed;
     right:122px;
     top: 4px;
-    width: 25px;
-    height:25px;
+    width: 23px;
+    height:23px;
     cursor:pointer;
-    background: url('../img/info_button.png') no-repeat;
-    opacity: 0.6;
+    background: url('../img/button-info.png') no-repeat;
+    opacity: 0.7;
     display: none;
 }
 
 #infoButton:hover {
-    opacity: 0.8;
+    opacity: 0.95;
     -webkit-transition: opacity;
     -webkit-transition-timing-function: ease-out;
     -webkit-transition-duration: 200ms;
